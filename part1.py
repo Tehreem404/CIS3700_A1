@@ -66,18 +66,14 @@ def uniform_cost_search(start, goal):
     while frontier:
         node = frontier.pop()
         explored.append(node)
+        print(node)
         if node == goal:
             return(explored)
-        family = node.get_family()
+        family = sort_family(node.get_family())
         for key in family:
-            member = family[key][0]
-            cost = family[key][1]
+            member = family[key][0] 
             if member not in explored and member not in frontier:
                 frontier.append(member)
-            elif member in frontier:
-                if cost > family[frontier][1]:
-                    frontier.remove(member)
-                    frontier.append(member)
     return(explored)
 
 """ Greedy Best-first search """
@@ -88,6 +84,7 @@ def greedy_best_first_search(start, goal):
 def a_star_search(start, goal):
     return()
 
+""" function to print the search result lists """
 def print_search(search):
     for i in range(len(search)):
         if i != len(search) -1:
@@ -95,11 +92,22 @@ def print_search(search):
         else:
             print(search[i].get_name(), end="\n\n")
 
+""" funciton to sort the family by cost """
+def sort_family(family):
+    sorted_family = {}
+    cost_list = []
+    for key in family:
+        cost_list.append(int(family[key][1]))
+    cost_list.sort(reverse=True)
+    print(cost_list)
+    for cost in cost_list:
+        for key in family:
+            if int(family[key][1]) == cost:
+                sorted_family[key] = family[key]
+    return(sorted_family)
+
 def main():
     graph = parse_graph_nodes('Data/nodeInfo.txt')
-
-    """ for member in graph:
-        print(graph[member]) """
 
     print("Depth-first search:")
     explored = []
