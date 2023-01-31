@@ -48,6 +48,22 @@ def breadth_first_search(start, goal):
     frontier = [start]
     explored = []
     while frontier:
+        node = frontier.pop(0)
+        explored.append(node)
+        if node == goal:
+            return(explored)
+        family = node.get_family()
+        for key in family:
+            member = family[key][0]
+            if member not in explored and member not in frontier:
+                frontier.append(member)
+    return(explored)
+
+""" Uniform-cost search """
+def uniform_cost_search(start, goal):
+    frontier = [start]
+    explored = []
+    while frontier:
         node = frontier.pop()
         explored.append(node)
         if node == goal:
@@ -55,13 +71,14 @@ def breadth_first_search(start, goal):
         family = node.get_family()
         for key in family:
             member = family[key][0]
-            if member not in explored:
+            cost = family[key][1]
+            if member not in explored and member not in frontier:
                 frontier.append(member)
+            elif member in frontier:
+                if cost > family[frontier][1]:
+                    frontier.remove(member)
+                    frontier.append(member)
     return(explored)
-
-""" Uniform-cost search """
-def uniform_cost_search(start, goal):
-    return()
 
 """ Greedy Best-first search """
 def greedy_best_first_search(start, goal):
@@ -80,6 +97,9 @@ def print_search(search):
 
 def main():
     graph = parse_graph_nodes('Data/nodeInfo.txt')
+
+    """ for member in graph:
+        print(graph[member]) """
 
     print("Depth-first search:")
     explored = []
