@@ -19,5 +19,5 @@ class StateNode():
     def add_member(self, member, cost):
         self.family[member.get_name()] = [member,cost]    
 
-    def __str__(self):
+    def __repr__(self):
         return(f"{self.name, self.heuristic, [member for member in self.family]}")

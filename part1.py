@@ -1,4 +1,5 @@
 from Classes.stateClass import *
+from Classes.frontier import *
 import pprint
 
 def print_(o):
@@ -18,7 +19,7 @@ def parse_graph_nodes(filename):
     create_graph(nodes, familyDict)
     return(nodes)
 
-""" Creating the graph for all nodes"""
+""" Creating the graph for all nodes """
 def create_graph(nodes, familyDict):
     for name, node in nodes.items():
         family = familyDict.get(name)
@@ -29,52 +30,46 @@ def create_graph(nodes, familyDict):
                 continue
             node.add_member(nodes.get(vertice), cost)
 
-""" Depth-first search """
-def depth_first_search(explored, graph, node, goal):
-    if node == goal:
-        explored.append(node)
-        return(explored)
-    if node not in explored:
-        explored.append(node)
-        family = node.get_family()
+""" implements bfs, dfs, ucs, gbfs, and a* """
+def general_search(start, goal, frontier):
+    explored = []
+    frontier.add(start)
+    parent = {start: None}
+    while not frontier.is_empty():
+        current = frontier.pop()
+        explored.append(current)
+        if current == goal:
+            path = []
+            while current != None:
+                path.append(current)
+                current = parent.get(current)
+            path.reverse()
+            return(path)
+        family = current.get_family()
         for key in family:
             member = family[key][0]
-            if member not in explored:
-                depth_first_search(explored, graph, member, goal)
+            if member not in explored and not frontier.contains(member):
+                frontier.add(member)
+                parent[member] = current
     return(explored)
+
+""" Depth-first search """
+def depth_first_search(start, goal):
+    frontier = StackFrontier()
+
+    #should return S-C-H-D-F
+    return (general_search(start, goal, frontier))
 
 """ Breadth-first search """
 def breadth_first_search(start, goal):
-    frontier = [start]
-    explored = []
-    while frontier:
-        node = frontier.pop(0)
-        explored.append(node)
-        if node == goal:
-            return(explored)
-        family = node.get_family()
-        for key in family:
-            member = family[key][0]
-            if member not in explored and member not in frontier:
-                frontier.append(member)
-    return(explored)
+    frontier = QueueFrontier()
+
+    #should return S,B,D,F
+    return(general_search(start, goal, frontier))
 
 """ Uniform-cost search """
 def uniform_cost_search(start, goal):
-    frontier = [start]
-    explored = []
-    while frontier:
-        node = frontier.pop()
-        explored.append(node)
-        print(node)
-        if node == goal:
-            return(explored)
-        family = sort_family(node.get_family())
-        for key in family:
-            member = family[key][0] 
-            if member not in explored and member not in frontier:
-                frontier.append(member)
-    return(explored)
+    return()
 
 """ Greedy Best-first search """
 def greedy_best_first_search(start, goal):
@@ -99,7 +94,6 @@ def sort_family(family):
     for key in family:
         cost_list.append(int(family[key][1]))
     cost_list.sort(reverse=True)
-    print(cost_list)
     for cost in cost_list:
         for key in family:
             if int(family[key][1]) == cost:
@@ -111,7 +105,7 @@ def main():
 
     print("Depth-first search:")
     explored = []
-    dfs = depth_first_search(explored, graph, graph['S'], graph['F'])
+    dfs = depth_first_search(graph['S'], graph['F'])
     print_search(dfs)
 
     print("Breadth-first search:")
