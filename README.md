@@ -20,5 +20,6 @@
         - 150 parents are generated and generations are reproduced until the optimal solution is found
 
 # How to Run Part 2
-    python3 part2.py
+    python3 part2.py [n]
+        - where n represents the number of queens and the board size
         - (if there are any errors running it could be the version I am running version 3.11.0)
