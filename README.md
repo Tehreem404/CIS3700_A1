@@ -1,7 +1,7 @@
-### CIS-3700 AI Assignment 1 -- Author: Tehreem Nazar 1108993
+>CIS-3700 AI Assignment 1 -- Author: Tehreem Nazar 1108993
 
 # Part 1: Searching
-part1.py will complete:
+`part1.py` will complete:
 * Depth-first search
 * Breadth-first search
 * Uniform-cost search
@@ -14,7 +14,7 @@ part1.py will complete:
 
 
 # Part 2: SuperQueens
-part2.py will complete:
+`part2.py` will complete:
 * nxn SuperQueens
 * solution is derived using genetic algorithm with mutations
 * 20000 parents are generated (on default) and generations are reproduced until the optimal solution is found
