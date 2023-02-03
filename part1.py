@@ -56,27 +56,28 @@ def general_search(start, goal, frontier):
 """ Depth-first search """
 def depth_first_search(start, goal):
     frontier = StackFrontier()
-
-    #should return S-C-H-D-F
+    #should return S-A-C-B-D-E-F
     return (general_search(start, goal, frontier))
 
 """ Breadth-first search """
 def breadth_first_search(start, goal):
     frontier = QueueFrontier()
-
-    #should return S,B,D,F
+    #should return S-B-D-F
     return(general_search(start, goal, frontier))
 
 """ Uniform-cost search """
 def uniform_cost_search(start, goal):
+    #should return S-B-D-F
     return()
 
 """ Greedy Best-first search """
 def greedy_best_first_search(start, goal):
+    #should return S-C-H-D-F
     return()
 
 """ A* search """
 def a_star_search(start, goal):
+    #should return S-A-G-D-F
     return()
 
 """ function to print the search result lists """

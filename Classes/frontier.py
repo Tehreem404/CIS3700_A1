@@ -1,5 +1,7 @@
+""" defining a class for frontiers """
+""" contains FIFO and FILO (stack vs queue) """
+
 class QueueFrontier:
-    # a queue frontier is for bfs (FIFO)
     def __init__(self, queue=[]):
         self.queue = queue
 
@@ -20,9 +22,7 @@ class QueueFrontier:
     def __repr__(self):
         return f"QueueFrontier({self.queue})"
 
-
 class StackFrontier:
-    # a stack frontier is for dfs (FILO)
     def __init__(self, stack=[]):
         self.stack = stack
 

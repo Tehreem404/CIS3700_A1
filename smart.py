@@ -1,3 +1,4 @@
+from Classes.frontier import *
 from Classes.stateClass import *
 import pprint
 
@@ -29,6 +30,29 @@ def create_graph(nodes, familyDict):
                 continue
             node.add_member(nodes.get(vertice), cost)
 
+""" implements bfs, dfs, ucs, gbfs, and a* """
+def general_search(start, goal, frontier):
+    explored = []
+    frontier.add(start)
+    parent = {start: None}
+    while not frontier.is_empty():
+        current = frontier.pop()
+        explored.append(current)
+        if current == goal:
+            path = []
+            while current != None:
+                path.append(current)
+                current = parent.get(current)
+            path.reverse()
+            return(path)
+        family = current.get_family()
+        for key in family:
+            member = family[key][0]
+            if member not in explored and not frontier.contains(member):
+                frontier.add(member)
+                parent[member] = current
+    return(explored)
+
 """ Depth-first search """
 def depth_first_search(explored, graph, node, goal):
     if node == goal:
@@ -44,19 +68,8 @@ def depth_first_search(explored, graph, node, goal):
 
 """ Breadth-first search """
 def breadth_first_search(start, goal):
-    frontier = [start]
-    explored = []
-    while frontier:
-        node = frontier.pop(0)
-        explored.append(node)
-        if node == goal:
-            return(explored)
-        family = node.get_family()
-        for key in family:
-            member = family[key][0]
-            if member not in explored and member not in frontier:
-                frontier.append(member)
-    return(explored)
+    frontier = QueueFrontier()
+    return(general_search(start, goal, frontier))
 
 """ Uniform-cost search """
 def uniform_cost_search(start, goal):
@@ -76,11 +89,23 @@ def uniform_cost_search(start, goal):
 
 """ Greedy Best-first search """
 def greedy_best_first_search(start, goal):
-    return()
-
+    explored = []
+    current = start
+    while True:
+        explored.append(current)
+        if current == goal:
+            return explored
+        current = min([member[0] for member in current.get_family().values()], key=lambda node:node.get_heuristic())
+    
 """ A* search """
 def a_star_search(start, goal):
-    return()
+    explored = []
+    current = start
+    while True:
+        explored.append(current)
+        if current == goal:
+            return explored
+        current = min([member[0] for member in current.get_family().values()], key=lambda node:node.get_heuristic())
 
 """ function to print the search result lists """
 def print_search(search):

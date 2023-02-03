@@ -1,13 +1,29 @@
+""" a class for all nxn boards """
+""" will generate/determine its own fitness, mutation etc. """
+
 import random
 
 class Board:
     #a board object for each nxn queen solution
     def __init__(self, n):
         self.n = n
+        self.conflicts = 0
         self.board = self.generate_board(n)
         self.fitness = self.determine_fitness()
-        self.mutation_rate = 0.1
-        self.mutation_amount = 0.1
+        self.mutation_rate = 0.05
+        self.probability = 0
+    
+    def get_fitness(self):
+        return self.fitness
+    
+    def set_probability(self, probability):
+        self.probability = probability
+
+    def get_probability(self):
+        return self.probability
+    
+    def get_board(self):
+        return self.board
     
     def generate_board(self, n):
         #create a random board
@@ -21,12 +37,13 @@ class Board:
         for i in range(self.n):
             #check for diagonal conflicts
             conflicts += self.conflict(i)
-
-        return -conflicts
+        self.conflicts = conflicts
+        
+        return 1/(conflicts+1)
     
     def conflict(self, i):
         #starting from 12, clockwise
-        queen_deltas = [(1,-1),(1,1)]
+        queen_deltas = [(1,-1),(1,1),(-1,0)]
         knight_deltas = [(1,-2),(2,-1),(2,1),(1,2)]
 
         conflicts = 0
@@ -53,12 +70,24 @@ class Board:
 
         return conflicts
 
+    def set_board(self, board):
+        self.board = board
+        self.fitness = self.determine_fitness()
+
+    def breed(self, other):
+        #breed a board with another board
+        child = Board(self.n)
+        other_board = other.get_board()
+        child.set_board(self.board[:self.n//2] + other_board[self.n//2:])
+        child.mutate()
+        return child
+    
     def mutate(self):
         #mutate a board
         for i in range(self.n):
-            if random.randint(0, self.n - 1) < self.mutation_rate:
-                self.board[i] = (self.board[i] + random.randint(-self.mutation_amount, self.mutation_amount)) % self.n
-        self.fitness = self.get_fitness()
+            if random.random() < self.mutation_rate:
+                self.board[i] = random.randint(0, self.n-1)
+        self.fitness = self.determine_fitness()
     
     def __repr__(self):
-        return f"Board({self.board}, fitness={self.fitness})"
+        return f"Board({self.board}, fitness={self.fitness}, conflicts={self.conflicts}, probability={self.probability})"
