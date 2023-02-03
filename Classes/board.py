@@ -65,7 +65,7 @@ class Board:
             #else check for queen in new x,y, add to conflict if true
             if self.board[x] == y:
                 conflicts += 1
-
+        print(f"Board:{self.board} conflicts:{conflicts}")
         return conflicts
 
     def set_board(self, board):

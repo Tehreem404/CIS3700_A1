@@ -24,11 +24,11 @@
 * where `[N]` represents the number of queens and the nxn board size (if left empty default will be 10)
 * where `[POPULATION_SIZE]` represents an (optional) configuration for how big the user wants the population (if left empty, default will be 10000) 
 * where `[CONFLICT_THRESHOLD]` represents minimum number of conflicts to look for (if left empty, default will be 0)
-* where `[LIMIT]` represents the number of iterations (generations) that are produced (if left empty, default is 100)
+* where `[LIMIT]` represents the number of iterations (generations) that are produced (if left empty, default is 50)
 * if there are any errors running it could be the version I am running version 3.11.0
     
 >NOTES: 
 * run `python3 part2.py -h` to see all usages 
 * the only flags that really need to be used are: `[-n N]`, and `[-c CONFLICT_THRESHOLD]`
 >>* Example: `python3 part2.py -n 6 -c 1` (lowest number of conflicts in 6x6 is 1)
-* IT WILL USUALLY TAKE AROUND 25-30 ITERATIONS TO FIND 0 COLLISIONS 10X10 
+* IT WILL USUALLY TAKE AROUND 10-30 ITERATIONS TO FIND 0 CONFLICTS FOR 10X10 
