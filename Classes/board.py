@@ -35,14 +35,12 @@ class Board:
         #determine fitness of the board
         conflicts = 0
         for i in range(self.n):
-            #check for diagonal conflicts
             conflicts += self.conflict(i)
         self.conflicts = conflicts
         
         return 1/(conflicts+1)
     
     def conflict(self, i):
-        #starting from 12, clockwise
         queen_deltas = [(1,-1),(1,1)]
         knight_deltas = [(1,-2),(2,-1),(2,1),(1,2)]
 
@@ -80,7 +78,6 @@ class Board:
         child.set_board(self.board[:self.n//2] + other_board[self.n//2:])
         child.mutate()
         child.fix_board()
-        self.fitness = self.determine_fitness()
         return child
 
     def fix_board(self):
@@ -92,6 +89,7 @@ class Board:
         for i in range(self.n):
             if self.board.count(self.board[i]) > 1:
                 self.board[i] = non_existent.pop()
+        self.fitness = self.determine_fitness()
     
     def mutate(self):
         #mutate a board

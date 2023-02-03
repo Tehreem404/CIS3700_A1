@@ -31,4 +31,4 @@
 * run `python3 part2.py -h` to see all usages 
 * the only flags that really need to be used are: `[-n N]`, and `[-c CONFLICT_THRESHOLD]`
 >>* Example: `python3 part2.py -n 6 -c 1` (lowest number of conflicts in 6x6 is 1)
-* IT WILL USUALLY TAKE AROUND 50 ITERATIONS TO FIND 0 COLLISIONS 10X10 
+* IT WILL USUALLY TAKE AROUND 25-30 ITERATIONS TO FIND 0 COLLISIONS 10X10 
