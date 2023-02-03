@@ -27,6 +27,8 @@
 * where `[LIMIT]` represents the number of iterations (generations) that are produced (if left empty, default is 100)
 * if there are any errors running it could be the version I am running version 3.11.0
     
->Note: run `python3 part2.py -h` to see all usages 
->Note pt2: the only flags that really need to be used are: `[-n N]`, and `[-c CONFLICT_THRESHOLD]`
->>Example: `python3 part2.py -n 6 -c 1` (lowest number of conflicts in 6x6 is 1)
+>NOTES: 
+* run `python3 part2.py -h` to see all usages 
+* the only flags that really need to be used are: `[-n N]`, and `[-c CONFLICT_THRESHOLD]`
+>>* Example: `python3 part2.py -n 6 -c 1` (lowest number of conflicts in 6x6 is 1)
+* IT WILL USUALLY TAKE AROUND 50 ITERATIONS TO FIND 0 COLLISIONS 10X10 

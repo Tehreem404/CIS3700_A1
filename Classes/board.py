@@ -43,7 +43,7 @@ class Board:
     
     def conflict(self, i):
         #starting from 12, clockwise
-        queen_deltas = [(1,-1),(1,1),(-1,0)]
+        queen_deltas = [(1,-1),(1,1)]
         knight_deltas = [(1,-2),(2,-1),(2,1),(1,2)]
 
         conflicts = 0
@@ -72,7 +72,6 @@ class Board:
 
     def set_board(self, board):
         self.board = board
-        self.fitness = self.determine_fitness()
 
     def breed(self, other):
         #breed a board with another board
@@ -80,14 +79,25 @@ class Board:
         other_board = other.get_board()
         child.set_board(self.board[:self.n//2] + other_board[self.n//2:])
         child.mutate()
+        child.fix_board()
+        self.fitness = self.determine_fitness()
         return child
+
+    def fix_board(self):
+        #fixes the board for horizontal conflicts
+        non_existent = []
+        for i in range(self.n):
+            if i not in self.board:
+                non_existent.append(i)
+        for i in range(self.n):
+            if self.board.count(self.board[i]) > 1:
+                self.board[i] = non_existent.pop()
     
     def mutate(self):
         #mutate a board
         for i in range(self.n):
             if random.random() < self.mutation_rate:
                 self.board[i] = random.randint(0, self.n-1)
-        self.fitness = self.determine_fitness()
     
     def __repr__(self):
         return f"Board({self.board}, fitness={self.fitness}, conflicts={self.conflicts}, probability={self.probability})"

@@ -89,7 +89,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     #all args are keyword args, with meta variable name
     parser.add_argument("-n", type=int, help="size of board", default=10)
-    parser.add_argument("-p", "--population_size", type=int, help="size of population", default=10000)
+    parser.add_argument("-p", "--population_size", type=int, help="size of population", default=15000)
     parser.add_argument("-c", "--conflict_threshold", type=int, help="conflict threshold", default=0)
     parser.add_argument("-l", "--limit", type=int, help="limit of iterations", default=100)
 
